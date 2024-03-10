@@ -4,6 +4,7 @@ import {Col, Row} from './Components/Structure.js';
 import {Terminal} from './Components/Terminal.js';
 import {LineInput} from './Components/LineInput.js';
 import {MessageFeed} from './Components/MessageFeed.js';
+import {getRawInput} from './util/util.js';
 
 type Option = {control: string; display: string; component: React.ReactNode};
 
@@ -16,27 +17,7 @@ export const Catalog = () => {
 	const pop = useCallback(() => setActive(noModule), [setActive]);
 
 	useInput((input, key) => {
-		setRawInput(
-			key.escape
-				? '[ESC]'
-				: key.return
-				? '[RETURN]'
-				: key.backspace
-				? '[BACKSPACE]'
-				: key.downArrow
-				? '[DOWN]'
-				: key.upArrow
-				? '[UP]'
-				: key.leftArrow
-				? '[LEFT]'
-				: key.rightArrow
-				? '[RIGHT]'
-				: key.delete
-				? '[DELETE]'
-				: key.tab
-				? '[TAB]'
-				: input,
-		);
+		setRawInput(getRawInput(input, key));
 
 		if (key.escape) {
 			if (active.display === 'None') {
