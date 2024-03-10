@@ -6,7 +6,7 @@ import {Text} from 'ink';
 
 type MessageTypes = 'normal' | 'warning' | 'error';
 
-type Message = {
+export type Message = {
 	value: string;
 	type: MessageTypes;
 	customRender?: (value: string, type: MessageTypes) => ReactNode;
@@ -69,15 +69,9 @@ export const useMessageFeed = (props: useMessageFeedProps) => {
 
 	const [messages, setMessages] = useState(initialMessages);
 	const pushMessage = useCallback(
-		(toPush: Message) => {
-			let newMessages = messages.slice(0);
-			if (messages.length === maxMessages) {
-				newMessages = newMessages.slice(1);
-			}
-			newMessages.push(toPush);
-			setMessages(newMessages);
-		},
-		[messages, setMessages],
+		(toPush: Message) =>
+			setMessages(prev => prev.concat(toPush).slice(0 - maxMessages)),
+		[setMessages, maxMessages],
 	);
 	const flush = useCallback(() => setMessages([]), []);
 

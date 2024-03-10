@@ -12,7 +12,7 @@ type DebuggerProps = CommonComponentProps & {
 
 export const Debugger = (props: DebuggerProps) => {
 	const {debug = false, objects, children} = props;
-	const [switcher, setSwitcher] = useState<'debug' | 'component'>('debug');
+	const [switcher, setSwitcher] = useState<'debug' | 'component'>('component');
 
 	useInput((_input, key) => {
 		if (key.tab) {
@@ -24,28 +24,27 @@ export const Debugger = (props: DebuggerProps) => {
 
 	return (
 		<Col>
-			<Row>
+			<Row paddingBottom={1} borderBottom={true}>
 				<Text
 					color={'red'}
 					backgroundColor={switcher === 'debug' ? 'redBright' : undefined}
 				>
-					Debugger
+					{`Debugger`}
 				</Text>
 				<Text
 					color={'red'}
 					backgroundColor={switcher === 'component' ? 'redBright' : undefined}
 				>
-					Component
+					{` Component`}
 				</Text>
-				<Text>(Switch with TAB)</Text>
+				<Text> (Switch with TAB)</Text>
 			</Row>
 			{switcher === 'debug'
 				? objects?.map(obj => (
-						<Row>
+						<Col>
 							<Text>{obj.key}</Text>
-							<Text> = </Text>
 							<Text>{JSON.stringify(obj.data)}</Text>
-						</Row>
+						</Col>
 				  ))
 				: children}
 		</Col>
