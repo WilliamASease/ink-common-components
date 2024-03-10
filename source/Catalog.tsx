@@ -6,6 +6,7 @@ import {
 	LineInputStory,
 	MessageFeedStory,
 	SelectionGridStory,
+	SwitcherStory,
 	TerminalStory,
 } from './StoryBook.js';
 import {SelectionGrid} from './Components/SelectionGrid.js';
@@ -49,6 +50,7 @@ export const Catalog = () => {
 							{display: 'MessageFeed', component: <MessageFeedStory />},
 							{display: 'LineInput', component: <LineInputStory />},
 							{display: 'SelectionGrid', component: <SelectionGridStory />},
+							{display: 'Switcher', component: <SwitcherStory />},
 						]}
 						onSelect={selected => {
 							if (!isNil(selected)) {

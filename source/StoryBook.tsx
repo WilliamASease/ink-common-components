@@ -1,30 +1,31 @@
-import React, {useCallback} from 'react';
+import React, {ReactNode, useCallback} from 'react';
 import {Terminal, TerminalSubmissionFunction} from './Components/Terminal.js';
 import {LineInput} from './Components/LineInput.js';
 import {MessageFeed} from './Components/MessageFeed.js';
 import {SelectionGrid} from './Components/SelectionGrid.js';
+import {Switcher} from './Components/Switcher.js';
+import {Text} from 'ink';
 
 export const TerminalStory = () => {
 	const onSubmit: TerminalSubmissionFunction = useCallback(
 		(_submission, operand, parameter) => {
 			if (operand === 'help') {
 				return [
-					{type: 'normal', value: '[RETURN] to submit'},
-					{type: 'normal', value: 'valid operands:'},
-					{type: 'normal', value: 'help'},
-					{type: 'normal', value: 'echo [value]'},
-					{type: 'normal', value: 'openthepodbaydoors'},
+					{value: '[RETURN] to submit'},
+					{value: 'valid operands:'},
+					{value: 'help'},
+					{value: 'echo [value]'},
+					{value: 'openthepodbaydoors'},
 				];
 			}
 			if (operand === 'echo') {
-				return [{type: 'normal', value: parameter}];
+				return [{value: parameter}];
 			}
 			if (operand === 'openthepodbaydoors') {
 				return [{type: 'error', value: `I can't let you do that, Dave.`}];
 			}
 			return [
 				{
-					type: 'normal',
 					value: `'${operand}' isn't a command. try 'help' for a list.`,
 				},
 			];
@@ -66,5 +67,16 @@ export const SelectionGridStory = () => (
 		getText={(toGet?: SelectionGridStoryItem) => toGet?.name ?? ''}
 		getTitle={(toGet: SelectionGridStoryItem) => toGet?.name ?? ''}
 		getDescription={(toGet: SelectionGridStoryItem) => toGet.description ?? ''}
+	/>
+);
+
+export const SwitcherStory = () => (
+	<Switcher
+		sections={new Array(4).fill(0).map((_i, idx) => ({
+			display: `${idx}`,
+			component: (<Text>{`Component at index ${idx}`}</Text>) as ReactNode,
+		}))}
+		textColor="red"
+		selectedBackgroundColor="redBright"
 	/>
 );

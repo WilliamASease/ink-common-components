@@ -1,7 +1,8 @@
-import React, {ReactNode, useState} from 'react';
+import React, {ReactNode} from 'react';
 import {CommonComponentProps} from './types.js';
-import {Col, Row} from './Structure.js';
-import {Text, useInput} from 'ink';
+import {Switcher} from './Switcher.js';
+import {Col} from './Structure.js';
+import {Text} from 'ink';
 
 type Obj = {key: string; data: any};
 
@@ -12,41 +13,27 @@ type DebuggerProps = CommonComponentProps & {
 
 export const Debugger = (props: DebuggerProps) => {
 	const {debug = false, objects, children} = props;
-	const [switcher, setSwitcher] = useState<'debug' | 'component'>('component');
 
-	useInput((_input, key) => {
-		if (key.tab) {
-			setSwitcher(switcher === 'debug' ? 'component' : 'debug');
-		}
-	});
-
-	if (debug === false) return children;
-
-	return (
-		<Col>
-			<Row paddingBottom={1} borderBottom={true}>
-				<Text
-					color={'red'}
-					backgroundColor={switcher === 'debug' ? 'redBright' : undefined}
-				>
-					{`Debugger`}
-				</Text>
-				<Text
-					color={'red'}
-					backgroundColor={switcher === 'component' ? 'redBright' : undefined}
-				>
-					{` Component`}
-				</Text>
-				<Text> (Switch with TAB)</Text>
-			</Row>
-			{switcher === 'debug'
-				? objects?.map(obj => (
+	return debug ? (
+		<Switcher
+			sections={[
+				{
+					display: 'Debugger',
+					component: objects?.map(obj => (
 						<Col>
 							<Text>{obj.key}</Text>
 							<Text>{JSON.stringify(obj.data)}</Text>
 						</Col>
-				  ))
-				: children}
-		</Col>
+					)),
+				},
+				{display: 'Component', component: children},
+			]}
+			textColor="red"
+			selectedBackgroundColor="redBright"
+			paddingUnderSwitcher={1}
+			initialSelection={1}
+		/>
+	) : (
+		children
 	);
 };

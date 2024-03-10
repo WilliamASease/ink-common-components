@@ -8,7 +8,7 @@ type MessageTypes = 'normal' | 'warning' | 'error';
 
 export type Message = {
 	value: string;
-	type: MessageTypes;
+	type?: MessageTypes;
 	customRender?: (value: string, type: MessageTypes) => ReactNode;
 };
 
@@ -46,13 +46,11 @@ export const MessageFeed = (props: MessageFeedProps) => {
 					return (
 						<Text
 							color={
-								message.type === 'normal'
-									? 'white'
-									: message.type === 'warning'
+								message.type === 'warning'
 									? 'yellow'
 									: message.type === 'error'
 									? 'red'
-									: undefined
+									: 'white'
 							}
 						>
 							{message.value}
