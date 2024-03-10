@@ -1,16 +1,12 @@
 import React, {useCallback} from 'react';
-import {Terminal} from './Components/Terminal.js';
+import {Terminal, TerminalSubmissionFunction} from './Components/Terminal.js';
 import {LineInput} from './Components/LineInput.js';
-import {Message, MessageFeed} from './Components/MessageFeed.js';
+import {MessageFeed} from './Components/MessageFeed.js';
 import {SelectionGrid} from './Components/SelectionGrid.js';
 
 export const TerminalStory = () => {
-	const onSubmit: (submission: string) => Message[] = useCallback(
-		(submission: string) => {
-			const [operand, parameter] = [
-				submission.split(' ')[0],
-				submission.split(' ').slice(1).join(' '),
-			];
+	const onSubmit: TerminalSubmissionFunction = useCallback(
+		(_submission, operand, parameter) => {
 			if (operand === 'help') {
 				return [
 					{type: 'normal', value: '[RETURN] to submit'},
@@ -38,7 +34,7 @@ export const TerminalStory = () => {
 	return (
 		<Terminal
 			onSubmit={onSubmit}
-			delayBetweenLinePrintsInMs={100}
+			delayBetweenLinePrintsInMs={50}
 			inputMemory={10}
 			debug
 		/>

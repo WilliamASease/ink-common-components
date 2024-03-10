@@ -7,9 +7,15 @@ import {CommonComponentProps} from './types.js';
 import pkg from 'lodash';
 const {isNil} = pkg;
 
+export type TerminalSubmissionFunction = (
+	process: string,
+	operand: string,
+	parameter: string,
+) => Message[];
+
 type TerminalProps = CommonComponentProps & {
 	initialMessages?: Message[];
-	onSubmit: (process: string) => Message[];
+	onSubmit: TerminalSubmissionFunction;
 	delayBetweenLinePrintsInMs?: number;
 	disableAutoSubmissionPrint?: boolean;
 	inputMemory?: number;
@@ -33,7 +39,11 @@ export const Terminal = (props: TerminalProps) => {
 			if (!disableAutoSubmissionPrint) {
 				pushMessage({type: 'normal', value: submission});
 			}
-			let messages = onSubmit(submission);
+			let messages = onSubmit(
+				submission,
+				submission.split(' ')[0] ?? '',
+				submission.split(' ').slice(1).join(' '),
+			);
 			for (let i = 0; i < messages.length; i++) {
 				let message = messages[i];
 				if (!isNil(message)) {
