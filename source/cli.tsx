@@ -7,7 +7,7 @@ import App from './app.js';
 const cli = meow(
 	`
 	Usage
-	  $ ink-common-components
+	  $ waseas-ink-components
 
 	Options
 		--help 
