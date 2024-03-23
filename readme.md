@@ -1,2 +1,2 @@
-# ink-common-components
+# wasease-ink-components
  
