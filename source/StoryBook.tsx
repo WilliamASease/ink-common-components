@@ -1,9 +1,10 @@
-import React, {ReactNode, useCallback} from 'react';
+import React, {ReactNode, useCallback, useMemo, useState} from 'react';
 import {Terminal, TerminalSubmissionFunction} from './Components/Terminal.js';
 import {LineInput} from './Components/LineInput.js';
 import {MessageFeed} from './Components/MessageFeed.js';
 import {SelectionGrid} from './Components/SelectionGrid.js';
 import {Switcher} from './Components/Switcher.js';
+import {ScrollingSelectionList} from './Components/ScrollingSelectionList.js';
 import {Text} from 'ink';
 
 export const TerminalStory = () => {
@@ -69,6 +70,38 @@ export const SelectionGridStory = () => (
 		getDescription={(toGet: SelectionGridStoryItem) => toGet.description ?? ''}
 	/>
 );
+
+type ScrollingSelectionList = {
+	name: string;
+	description?: string;
+};
+export const ScrollingSelectionListStory = () => {
+	const [hovering, setHovering] = useState<SelectionGridStoryItem>();
+	const [selected, setSelected] = useState<SelectionGridStoryItem>();
+	const items = useMemo(
+		() => new Array(20).fill(0).map((_i, idx) => ({name: `${idx}`})),
+		[],
+	);
+	return (
+		<>
+			<ScrollingSelectionList<SelectionGridStoryItem>
+				debug
+				items={items}
+				onHover={setHovering}
+				onSelect={setSelected}
+				getText={(toGet?: SelectionGridStoryItem) => toGet?.name ?? ''}
+				findInitialIndex={useCallback(
+					(item: SelectionGridStoryItem) => item.name === '8',
+					[],
+				)}
+			/>
+			<Text>----</Text>
+			<Text>
+				hovering over {hovering?.name ?? ''} selected: {selected?.name ?? ''}
+			</Text>
+		</>
+	);
+};
 
 export const SwitcherStory = () => (
 	<Switcher

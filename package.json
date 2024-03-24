@@ -1,6 +1,6 @@
 {
 	"name": "waseas-ink-components",
-	"version": "0.0.3",
+	"version": "0.0.7",
 	"license": "MIT",
 	"bin": "dist/cli.js",
 	"type": "module",

@@ -1,7 +1,7 @@
 import {ReactNode, useState} from 'react';
 import {CommonComponentProps} from './types.js';
-import {useInput, Text} from 'ink';
-import {Col, Row} from './Structure.js';
+import {useInput, Text, BoxProps, Box} from 'ink';
+import {Row} from './Structure.js';
 import React from 'react';
 
 type SwitcherProps = CommonComponentProps & {
@@ -10,6 +10,7 @@ type SwitcherProps = CommonComponentProps & {
 	paddingUnderSwitcher?: number;
 	textColor?: string;
 	selectedBackgroundColor?: string;
+	containerProps?: BoxProps;
 };
 
 export const Switcher = (props: SwitcherProps) => {
@@ -19,6 +20,7 @@ export const Switcher = (props: SwitcherProps) => {
 		paddingUnderSwitcher = 0,
 		textColor = 'green',
 		selectedBackgroundColor = 'greenBright',
+		containerProps = {flexDirection: 'column'},
 	} = props;
 
 	const [active, setActive] = useState(initialSelection);
@@ -29,7 +31,7 @@ export const Switcher = (props: SwitcherProps) => {
 	});
 
 	return (
-		<Col>
+		<Box {...containerProps}>
 			<Row paddingBottom={paddingUnderSwitcher}>
 				{sections.map((section, key) => (
 					<Text
@@ -43,6 +45,6 @@ export const Switcher = (props: SwitcherProps) => {
 				<Text>(Switch with TAB)</Text>
 			</Row>
 			{sections[active]?.component}
-		</Col>
+		</Box>
 	);
 };

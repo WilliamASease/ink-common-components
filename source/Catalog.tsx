@@ -5,6 +5,7 @@ import {getRawInput} from './util/util.js';
 import {
 	LineInputStory,
 	MessageFeedStory,
+	ScrollingSelectionListStory,
 	SelectionGridStory,
 	SwitcherStory,
 	TerminalStory,
@@ -44,12 +45,16 @@ export const Catalog = () => {
 				<>
 					<Text> </Text>
 					<SelectionGrid<Option>
-						itemsInRow={5}
+						itemsInRow={4}
 						items={[
 							{display: 'Terminal', component: <TerminalStory />},
 							{display: 'MessageFeed', component: <MessageFeedStory />},
 							{display: 'LineInput', component: <LineInputStory />},
 							{display: 'SelectionGrid', component: <SelectionGridStory />},
+							{
+								display: 'ScrollingSelectionList',
+								component: <ScrollingSelectionListStory />,
+							},
 							{display: 'Switcher', component: <SwitcherStory />},
 						]}
 						onSelect={selected => {
